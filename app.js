@@ -7,6 +7,7 @@ const session = require("express-session");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 const mongoose = require("mongoose");
+// const flash = require("connect-flash");
 
 
 // Routes
@@ -24,7 +25,7 @@ main().then(() => {
 })
 
 app.use(express.urlencoded({ extended: true }));
-
+// app.use(flash());
 
 app.use("/programs", programRoute);
 
