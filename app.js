@@ -11,7 +11,8 @@ const mongoose = require("mongoose");
 
 
 // Routes
-const programRoute = require("./routes/program");
+const programRoute = require("./routes/programs");
+const articleRoute = require("./routes/articles");
 
 async function main() {
     await mongoose.connect("mongodb://localhost:27017/UESI");
@@ -25,9 +26,11 @@ main().then(() => {
 })
 
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 // app.use(flash());
 
 app.use("/programs", programRoute);
+app.use("/articles", articleRoute);
 
 app.get("/",(req, res) => {
     res.send("I'm Root ")

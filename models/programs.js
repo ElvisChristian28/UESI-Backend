@@ -8,6 +8,8 @@ const programSchema = new Schema({
     end_date: Date,
     program_status:String,
     location:String
+    // feedback_reviced
+    // /enrollerd_users
 })
 
 const Program = mongoose.model('Program',programSchema);

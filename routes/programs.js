@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const wrapAsync = require("../utils/wrapAsync");
-const programControllers = require("../Controllers/program");
+const programControllers = require("../Controllers/programs");
 const Program = require("../models/programs");
 
 router.route("/")
