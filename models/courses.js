@@ -8,8 +8,11 @@ const courseSchema = new Schema({
         type:Date,
         default:Date.now()
     },
-    
-    course_status: String,
+    instructors: [String]
     // feedback_reviced
-    // /enrollerd_users
+    // enrollerd_users
 })
+
+const Course = mongoose.model("Course", courseSchema);
+
+module.exports = Course;

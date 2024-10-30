@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Program = require("../models/programs");
 const Article = require("../models/articles");
+const Course = require("../models/courses");
 
 // Connect to MongoDB
 mongoose.connect("mongodb://localhost:27017/UESI");
@@ -22,13 +23,24 @@ mongoose.connection.once("open", async () => {
     title: `Article Title ${i + 1}`,
     content: `This is the content of Article ${i + 1}. It covers interesting topics and insights.`,
     published_date: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1),
-}));
+  }));
 
+  const sampleCourses = Array.from({ length: 10 }, (_, i) => ({
+    course_name: `Course ${i + 1}`,
+    description: `This is the description for Course ${i + 1}. It covers essential topics and skills.`,
+    published_date: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1),
+    instructors: [`Instructor ${i + 1}`, `Instructor ${i + 2}`] // Two sample instructors per course
+  }));
+
+  await Course.deleteMany({});
+  await Course.insertMany(sampleCourses);
+
+  console.log("10 sample records inserted into the Course collection");
 // Clear existing data and insert new articles
   await Article.deleteMany({});
   await Article.insertMany(sampleArticles);
 
-console.log("15 sample records inserted into the Article collection");
+  console.log("15 sample records inserted into the Article collection");
 
   // Clear existing data and insert new programs
   await Program.deleteMany({});
@@ -36,6 +48,7 @@ console.log("15 sample records inserted into the Article collection");
 
   console.log("50 sample records inserted into the Program collection");
   mongoose.connection.close();
+
 });
 
 // If there's an error during connection
