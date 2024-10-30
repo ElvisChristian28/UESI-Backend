@@ -19,11 +19,11 @@ module.exports.addProgram = async (req,res) => {
 
 module.exports.show = (async (req, res) => {
     let { id } = req.params;
-    const program = await Program.findById(id);
+    const program = await Program.findById(id).populate("feedbacks");
     if (!program) {
         // req.flash("error", "This program Doesn't Exist");
         console.log("Error");
-        // res.redirect("/programs");
+        res.redirect("/programs");
     }
     else {
         res.json(program);

@@ -19,7 +19,7 @@ module.exports.addCourse = async (req,res) => {
 
 module.exports.show = (async (req, res) => {
     let { id } = req.params;
-    const course = await Course.findById(id);
+    const course = await Course.findById(id).populate("feedbacks");
     if (!course) {
         // req.flash("error", "This course Doesn't Exist");
         console.log("Error");
@@ -27,9 +27,8 @@ module.exports.show = (async (req, res) => {
     }
     else {
         console.log(course);
-        res.redirect("/courses");
+        res.json(course);
     }
-    res.redirect("/courses");
 });
 
 module.exports.edit_save = (async (req, res) => {

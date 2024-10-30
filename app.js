@@ -14,6 +14,7 @@ const mongoose = require("mongoose");
 const programRoute = require("./routes/programs");
 const articleRoute = require("./routes/articles");
 const coursesRoute = require("./routes/courses");
+const feedbackRoute = require("./routes/feedbacks");
 
 async function main() {
     await mongoose.connect("mongodb://localhost:27017/UESI");
@@ -33,10 +34,11 @@ app.use(methodOverride("_method"));
 app.use("/programs", programRoute);
 app.use("/articles", articleRoute);
 app.use("/courses",coursesRoute);
+app.use("/", feedbackRoute);
 
 app.get("/",(req, res) => {
     res.send("I'm Root ")
-})
+});
 
 app.listen(8080, () => {
     console.log("Connected to Mongodb port 8080");

@@ -19,7 +19,7 @@ module.exports.addArticle = async (req,res) => {
 
 module.exports.show = (async (req, res) => {
     let { id } = req.params;
-    const article = await Article.findById(id);
+    const article = await Article.findById(id).populate("feedbacks");
     if (!article) {
         // req.flash("error", "This article Doesn't Exist");
         console.log("Error");
