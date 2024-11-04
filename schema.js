@@ -32,3 +32,11 @@ module.exports.feedbackSchema = Joi.object({
         rating: Joi.number().min(1).max(5).required(),
     }).required(),
 });
+
+module.exports.videoSchema = Joi.object({
+    video: Joi.object({
+        title: Joi.string().required(),
+        description: Joi.string().required(),
+        url: Joi.string().required(),
+    }).required(),
+});

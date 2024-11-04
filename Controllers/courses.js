@@ -19,7 +19,7 @@ module.exports.addCourse = async (req,res) => {
 
 module.exports.show = (async (req, res) => {
     let { id } = req.params;
-    const course = await Course.findById(id).populate("feedbacks");
+    const course = await Course.findById(id).populate("feedbacks").populate("videos");
     if (!course) {
         // req.flash("error", "This course Doesn't Exist");
         console.log("Error");

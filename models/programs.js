@@ -16,7 +16,7 @@ const programSchema = new Schema({
         }
     ]
     // enrollerd_users
-})
+});
 
 programSchema.post("findOneAndDelete", async (program) => {
     if (program) {

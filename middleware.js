@@ -3,7 +3,7 @@ const Article = require("./models/articles");
 const Feedback = require("./models/feedbacks");
 const Course = require("./models/courses");
 const Program = require("./models/programs");
-const { articleSchema, courseSchema, programSchema, feedbackSchema } = require("./schema");
+const { articleSchema, courseSchema, programSchema, feedbackSchema, videoSchema } = require("./schema");
 const ExpressError = require("./utils/ExpressError");
 
 module.exports.validateArticle = (req, res, next) => {
@@ -47,6 +47,18 @@ module.exports.validateProgram = (req, res, next) => {
 
 module.exports.validateFeedback = (req,res,next) => {
     const result = feedbackSchema.validate(req.body);
+    let {error} = result;
+    if(error){
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400,errMsg);
+    }
+    else{
+        next();
+    }
+};
+
+module.exports.validateVideo = (req,res,next) => {
+    const result = videoSchema.validate(req.body);
     let {error} = result;
     if(error){
         let errMsg = error.details.map((el) => el.message).join(",");
