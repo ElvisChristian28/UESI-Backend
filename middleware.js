@@ -108,9 +108,7 @@ module.exports.isFeedbackAuthor = wrapAsync( async(req,res,next) => {
 
 module.exports.isAdmin = wrapAsync(async (req, res, next) => {
     // Check the `isAdmin` field
-    // console.log(currUser);
-    console.log(req.user);
-    if (!req.user) {
+    if (!req.user.isAdmin) {
         req.flash("error",`You don't have Permission to delete this.`);
         return res.redirect(`/programs`);
     }

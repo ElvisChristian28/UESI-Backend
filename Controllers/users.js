@@ -1,5 +1,6 @@
 // const Login = require("../models/login");
 // const Registration = require("../models/registration");
+const { isAdmin } = require("../middleware");
 const User = require("../models/user");
 
 module.exports.signUpPage = (req, res) => {
@@ -9,8 +10,14 @@ module.exports.signUpPage = (req, res) => {
 
 module.exports.signUp_save = async (req, res, next) => {
     try {
-        const { email, username, password, first_name, last_name, phone_number, address, gender, pincode } = req.body;
-        const newUser = new User({ email, username, first_name, last_name, phone_number, address, gender, pincode });
+        const { email, username, password, first_name, last_name, phone_number, address, gender, pincode, newAdmin } = req.body;
+        let isAdmin = false;
+        console.log(req.body);
+        if(newAdmin === 'true'){
+            isAdmin = true;
+        }
+        const newUser = new User({ email, username, first_name, last_name, phone_number, address, gender, pincode, isAdmin });
+        console.log(newUser);
         const registeredUser = await User.register(newUser, password);
         console.log(registeredUser);
         req.login(registeredUser, (err) => {
