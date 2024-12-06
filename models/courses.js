@@ -22,8 +22,13 @@ const courseSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Feedback'
         }
+    ],
+    enrollerd_users:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
     ]
-    // enrollerd_users
 });
 
 courseSchema.post("findOneAndDelete", async (course) => {

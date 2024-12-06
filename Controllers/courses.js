@@ -40,7 +40,7 @@ module.exports.edit_save = (async (req, res) => {
     let { id } = req.params;
     let course = await Course.findByIdAndUpdate(id, { ...req.body.course });
     let saved = await course.save();
-    console.log(saved)
+    console.log(saved);
     // console.log({ ...req.body.course });
     req.flash("success", "Course Updated!");
     res.redirect("/courses");
@@ -73,3 +73,12 @@ module.exports.editPage = (async (req, res) => {
         res.send("Render edittttt page here for COURSE");
     }
 });
+
+module.exports.enrolledment = async (req, res) => {
+    console.log(req.params);
+    console.log(req.user);
+    let course = await Course.findById(req.params.id);
+    course.enrollerd_users.push(req.user._id);
+    await course.save();
+    res.redirect(`/courses/${req.params.id}`);
+}

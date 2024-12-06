@@ -70,3 +70,10 @@ module.exports.editPage = (async (req, res) => {
         res.send("Render edittttt page here for PROGRAMS");
     }
 });
+
+module.exports.registeredUsers = async (req, res) => {
+    let program = await Program.findById(req.params.id);
+    program.registeredUsers.push(req.user._id);
+    await program.save();
+    res.redirect(`/programs/${req.params.id}`);
+}

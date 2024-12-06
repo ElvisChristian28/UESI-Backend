@@ -14,4 +14,7 @@ router.route("/:id")
     .put(isLoggedin, validateCourse, isAdmin, wrapAsync(courseControllers.edit_save))
     .delete(isLoggedin, isAdmin, wrapAsync(courseControllers.delete))
 
+router.route("/:id/enrolledment")
+    .get(wrapAsync(courseControllers.enrolledment))
+
 module.exports = router;

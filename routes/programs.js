@@ -14,6 +14,7 @@ router.route("/:id")
     .put(isLoggedin, validateProgram, isAdmin, wrapAsync(programControllers.edit_save))
     .delete(isLoggedin, isAdmin, wrapAsync(programControllers.delete));
 
-// router.get("/:id/edit", wrapAsync(programControllers.));
+router.get("/:id/edit", wrapAsync(programControllers.editPage));
+router.get("/:id/registeredUsers", isLoggedin, wrapAsync(programControllers.registeredUsers));
 
 module.exports = router;

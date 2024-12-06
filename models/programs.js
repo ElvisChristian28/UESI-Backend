@@ -14,8 +14,13 @@ const programSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Feedback'
         }
+    ],
+    registeredUsers:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
     ]
-    // enrollerd_users
 });
 
 programSchema.post("findOneAndDelete", async (program) => {
