@@ -1,13 +1,13 @@
 const express = require("express");
-const router = express.Router({mergeParams : true});
+const router = express.Router({ mergeParams: true });
 const wrapAsync = require("../utils/wrapAsync");
-const { validateVideo } = require("../middleware");
+const { validateVideo, isLoggedin } = require("../middleware");
 const videoControllers = require("../Controllers/videos");
 
-// ADD REVIEW
-router.post("/videos",validateVideo,wrapAsync(videoControllers.addCourseVideo));
+// ADD Video
+router.post("/videos",isLoggedin, validateVideo, wrapAsync(videoControllers.addCourseVideo));
 
-//DELETE REVIEW
-router.delete("/videos/:videoId",wrapAsync(videoControllers.deleteCourseVideo));
+//DELETE Video
+router.delete("/videos/:videoId",isLoggedin, wrapAsync(videoControllers.deleteCourseVideo));
 
 module.exports = router;

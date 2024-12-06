@@ -13,15 +13,15 @@ module.exports.addProgram = async (req,res) => {
     const newprogram = new Program(req.body.program);
     let savedprogram = await newprogram.save();
     console.log(savedprogram);
-    // req.flash("success", "Program Created Successfully!!");
-    // res.redirect("/programs");
+    req.flash("success", "Program Created Successfully!!");
+    res.redirect("/programs");
 }
 
 module.exports.show = (async (req, res) => {
     let { id } = req.params;
-    const program = await Program.findById(id).populate("feedbacks");
+    const program = await Program.findById(id).populate({ path: "feedbacks", populate: {path: "author",}, });
     if (!program) {
-        // req.flash("error", "This program Doesn't Exist");
+        req.flash("error", "This program Doesn't Exist");
         console.log("Error");
         res.redirect("/programs");
     }
@@ -40,7 +40,7 @@ module.exports.edit_save = (async (req, res) => {
     let program = await Program.findByIdAndUpdate(id, { ...req.body.program });
     await program.save();
     // console.log({ ...req.body.program });
-    // req.flash("success", "program Updated!");
+    req.flash("success", "program Updated!");
     // res.redirect("/programs");
     res.json(newprogram);
 });
@@ -48,7 +48,25 @@ module.exports.edit_save = (async (req, res) => {
 module.exports.delete = (async (req, res) => {
     let { id } = req.params;
     await Program.findByIdAndDelete(id);
-    // req.flash("success", "Listing Deleted!");
+    req.flash("success", "Program Deleted!");
     res.redirect("/programs");
 });
 
+module.exports.newPage = (req, res) => {
+    // res.render("listings/new.ejs");
+    console.log(req.user);
+    res.send("Render new page hereeeee for PROGRAMS");
+};
+
+module.exports.editPage = (async (req, res) => {
+    let { id } = req.params;
+    const article = await Article.findById(id);
+    if (!article) {
+        req.flash("error", "This Listing Doesn't Exist");
+        res.redirect("/listings");
+    }
+    else {
+        console.log(req.user);
+        res.send("Render edittttt page here for PROGRAMS");
+    }
+});

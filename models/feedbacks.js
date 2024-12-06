@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 
 const feedbackSchema = new Schema({
-    // user_id
     feedback_content: String,
     rating:{
         type: Number,
@@ -13,6 +12,10 @@ const feedbackSchema = new Schema({
     feedback_date: {
         type: Date,
         default: Date.now()
+    },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 

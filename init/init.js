@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Program = require("../models/programs");
 const Article = require("../models/articles");
 const Course = require("../models/courses");
+const Feedback = require("../models/feedbacks");
 
 // Connect to MongoDB
 mongoose.connect("mongodb://localhost:27017/UESI");
@@ -23,6 +24,7 @@ mongoose.connection.once("open", async () => {
     title: `Article Title ${i + 1}`,
     content: `This is the content of Article ${i + 1}. It covers interesting topics and insights.`,
     published_date: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1),
+    author: "6752a842d7a7fab809825111"
   }));
 
   const sampleCourses = Array.from({ length: 10 }, (_, i) => ({
@@ -45,6 +47,8 @@ mongoose.connection.once("open", async () => {
   // Clear existing data and insert new programs
   await Program.deleteMany({});
   await Program.insertMany(samplePrograms);
+
+  await Feedback.deleteMany({});
 
   console.log("50 sample records inserted into the Program collection");
   mongoose.connection.close();

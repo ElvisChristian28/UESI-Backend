@@ -28,7 +28,7 @@ module.exports.articleSchema = Joi.object({
 
 module.exports.feedbackSchema = Joi.object({
     feedback: Joi.object({
-        content: Joi.string().required(),
+        feedback_content: Joi.string().required(),
         rating: Joi.number().min(1).max(5).required(),
     }).required(),
 });

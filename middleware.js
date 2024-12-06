@@ -68,3 +68,51 @@ module.exports.validateVideo = (req,res,next) => {
         next();
     }
 };
+
+module.exports.saveRedirectUrl = (req,res,next) => {
+    if(req.session.redirectUrl){
+        res.locals.redirectUrl = req.session.redirectUrl
+    }
+    next();
+};
+
+module.exports.isLoggedin = (req,res,next)  => {
+    if(!req.isAuthenticated()){
+        req.session.redirectUrl = req.originalUrl;
+        req.flash("error","you must be logged in");
+        res.redirect("/login");
+    }
+    next();
+}
+
+module.exports.isOwnerArticle = wrapAsync( async(req,res,next) => {
+    let { id } = req.params;
+    let article = await Article.findById(id);
+    console.log(req.user);
+    if(!article.author.equals(req.user._id)){
+        req.flash("error",`You don't have Permisson of ${article.title}`);
+        return res.redirect(`/articles/${id}`);
+    }
+    next();
+});
+
+module.exports.isFeedbackAuthor = wrapAsync( async(req,res,next) => {
+    let { feedbackId } = req.params;
+    let feedback = await Feedback.findById(feedbackId);
+    if(!feedback.author.equals(req.user._id)){
+        req.flash("error",`You don't have Permission to delete this review`);
+        return res.redirect(`/programs`);
+    }
+    next();
+});
+
+module.exports.isAdmin = wrapAsync(async (req, res, next) => {
+    // Check the `isAdmin` field
+    // console.log(currUser);
+    console.log(req.user);
+    if (!req.user) {
+        req.flash("error",`You don't have Permission to delete this.`);
+        return res.redirect(`/programs`);
+    }
+    next();
+});

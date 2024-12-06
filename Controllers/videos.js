@@ -11,7 +11,7 @@ module.exports.addCourseVideo = (async (req, res) => {
     course.videos.push(newVideo);
     await newVideo.save();
     await course.save();
-    // req.flash("success","Video Save Successfully!!");
+    req.flash("success","Video Save Successfully!!");
     res.redirect(`/courses/${course._id}`);
 });
 
@@ -19,6 +19,6 @@ module.exports.deleteCourseVideo = (async (req, res) => {
     let { id, videoId } = req.params;
     await Course.findByIdAndUpdate(id, { $pull: { videos: videoId } });
     await Video.findByIdAndDelete(videoId);
-    // req.flash("success","Video Deleted!");
+    req.flash("success","Video Deleted!");
     res.redirect(`/courses/${id}`);
 });
